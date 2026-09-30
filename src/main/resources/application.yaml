@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate          # схему создаёт Liquibase, Hibernate только валидирует
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -37,7 +37,12 @@ spring:
 app:
   kafka:
     topic:
-      subscription-changed: subscription-changed    # сюда шлём события об изменении подписки
+      subscription-changed: subscription-changed
+
+  scheduler:
+    check-expired-subscriptions:
+      fixed-delay-ms: 60000
+      initial-delay-ms: 30000
 
 eureka:
   client:

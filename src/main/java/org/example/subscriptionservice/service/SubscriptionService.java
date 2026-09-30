@@ -48,14 +48,6 @@ public class SubscriptionService {
 
     }
 
-
-
-    private SubscriptionDto toDto (Subscription s){
-        return new SubscriptionDto(
-              s.getLogin(),s.getType(),s.getExpiresAt()
-        );
-    }
-
     //ПОНИЗИТЬ ПОДПИСКУ А ПОТОМ В КАФКУ
     @Transactional
     public SubscriptionDto downgradeToFree(String login, String reason) {
@@ -85,6 +77,12 @@ public class SubscriptionService {
         return subscriptionRepository.findByTypeAndExpiresAtBefore(
                 SubscriptionType.PAID,
                 LocalDateTime.now()
+        );
+    }
+
+    private SubscriptionDto toDto (Subscription s){
+        return new SubscriptionDto(
+                s.getLogin(),s.getType(),s.getExpiresAt()
         );
     }
 }

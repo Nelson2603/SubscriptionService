@@ -9,11 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Планировщик задач.
- * Раз в минуту проверяет, не истёк ли у кого-то срок PAID-подписки.
- * Если истёк — понижает до FREE и шлёт событие в Kafka.
- */
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -23,7 +19,12 @@ public class SubscriptionScheduler {
 
    //ЗАПУСК КАЖДУЮ МИНУТУ ПОСЛЕ ЗАВЕРШЕНИЯ ПРЕДЫДУЩЕГО
 
-    @Scheduled(fixedDelay = 60_000, initialDelay = 30_000)
+
+    @Scheduled(
+            fixedDelayString = "${app.scheduler.check-expired-subscriptions.fixed-delay-ms:60000}",
+            initialDelayString = "${app.scheduler.check-expired-subscriptions.initial-delay-ms:30000}"
+
+    )
     public void checkExpiredSubscriptions() {
         log.debug("Проверка истёкших подписок...");
 
